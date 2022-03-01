@@ -2,7 +2,7 @@ version: "3"
 
 services:
   namenode:
-    image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-namenode:2.0.0-hadoop2.7.4-java8
     container_name: namenode
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
@@ -14,7 +14,7 @@ services:
       - 50070:50070
 
   datanode:
-    image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-datanode:2.0.0-hadoop2.7.4-java8
     container_name: datanode
     volumes:
       - hadoop_datanode:/hadoop/dfs/data
@@ -26,7 +26,7 @@ services:
       - 50075:50075
 
   resourcemanager:
-    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-resourcemanager:2.0.0-hadoop2.7.4-java8
     container_name: resourcemanager
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
@@ -36,7 +36,7 @@ services:
       - 8088:8088
 
   nodemanager1:
-    image: bde2020/hadoop-nodemanager:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-nodemanager:2.0.0-hadoop2.7.4-java8
     container_name: nodemanager
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
@@ -46,7 +46,7 @@ services:
       - 8042:8042
 
   historyserver:
-    image: bde2020/hadoop-historyserver:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-historyserver:2.0.0-hadoop2.7.4-java8
     container_name: historyserver
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
@@ -58,7 +58,7 @@ services:
       - 8188:8188
   
   zoo:
-    image: zookeeper:3.4.10
+    image: zookeeper:3.4.14
     container_name: zoo
     environment:
       ZOO_MY_ID: 1
@@ -87,6 +87,7 @@ services:
       HBASE_CONF_hbase_regionserver_hostname: hbase-region
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 zoo:2181 hbase-master:16010"
     ports:
+      - 16020:16020
       - 16030:16030
 
 volumes:
