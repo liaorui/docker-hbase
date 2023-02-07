@@ -2,7 +2,7 @@ version: "3"
 
 services:
   namenode:
-    image: liaor/hadoop-namenode:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-namenode:2.0.0-hadoop3.2.3-java8
     hostname: namenode
     container_name: namenode
     volumes:
@@ -15,7 +15,7 @@ services:
       - "50070:50070"
       - "8020:8020"
   datanode:
-    image: liaor/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-datanode:2.0.0-hadoop3.2.3-java8
     hostname: datanode 
     container_name: datanode
     volumes:
@@ -28,7 +28,7 @@ services:
       - "50010:50010"
       - "50075:50075"
   resourcemanager:
-    image: liaor/hadoop-resourcemanager:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-resourcemanager:2.0.0-hadoop3.2.3-java8
     container_name: resourcemanager
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
@@ -38,7 +38,7 @@ services:
       - 8088:8088
 
   nodemanager1:
-    image: liaor/hadoop-nodemanager:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-nodemanager:2.0.0-hadoop3.2.3-java8
     container_name: nodemanager
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
@@ -48,7 +48,7 @@ services:
       - 8042:8042
 
   historyserver:
-    image: liaor/hadoop-historyserver:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-historyserver:2.0.0-hadoop3.2.3-java8
     container_name: historyserver
     volumes:
       - historyserver:/hadoop/yarn/timeline

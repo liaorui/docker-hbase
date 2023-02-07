@@ -2,7 +2,7 @@ version: "3"
 
 services:
   namenode:
-    image: liaor/hadoop-namenode:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-namenode:2.0.0-hadoop3.2.3-java8
     container_name: namenode
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
@@ -12,7 +12,7 @@ services:
       - ./hadoop.env
 
   datanode:
-    image: liaor/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-datanode:2.0.0-hadoop3.2.3-java8
     container_name: datanode
     volumes:
       - hadoop_datanode:/hadoop/dfs/data
@@ -22,7 +22,7 @@ services:
       - ./hadoop.env
 
   resourcemanager:
-    image: liaor/hadoop-resourcemanager:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-resourcemanager:2.0.0-hadoop3.2.3-java8
     container_name: resourcemanager
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
@@ -30,7 +30,7 @@ services:
       - ./hadoop.env
 
   nodemanager1:
-    image: liaor/hadoop-nodemanager:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-nodemanager:2.0.0-hadoop3.2.3-java8
     container_name: nodemanager
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
@@ -38,7 +38,7 @@ services:
       - ./hadoop.env
 
   historyserver:
-    image: liaor/hadoop-historyserver:2.0.0-hadoop2.7.4-java8
+    image: liaor/hadoop-historyserver:2.0.0-hadoop3.2.3-java8
     container_name: historyserver
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
