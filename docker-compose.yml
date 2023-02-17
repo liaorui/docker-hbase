@@ -3,6 +3,8 @@ version: "3"
 services:
   namenode:
     image: liaor/hadoop-namenode:2.0.0-hadoop3.2.3-java8
+    networks:
+      - hive-server
     hostname: namenode
     container_name: namenode
     volumes:
@@ -14,8 +16,11 @@ services:
     ports:
       - "9870:9870"
       - "8020:8020"
+ 
   datanode:
     image: liaor/hadoop-datanode:2.0.0-hadoop3.2.3-java8
+    networks:
+      - hive-server
     hostname: datanode 
     container_name: datanode
     volumes:
@@ -27,8 +32,11 @@ services:
     ports:
       - "9866:9866"
       - "9864:9864"
+ 
   resourcemanager:
     image: liaor/hadoop-resourcemanager:2.0.0-hadoop3.2.3-java8
+    networks:
+      - hive-server
     container_name: resourcemanager
     environment:
       SERVICE_PRECONDITION: "namenode:9870 datanode:9864"
@@ -37,6 +45,8 @@ services:
 
   nodemanager1:
     image: liaor/hadoop-nodemanager:2.0.0-hadoop3.2.3-java8
+    networks:
+      - hive-server
     container_name: nodemanager
     environment:
       SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
@@ -47,6 +57,8 @@ services:
 
   historyserver:
     image: liaor/hadoop-historyserver:2.0.0-hadoop3.2.3-java8
+    networks:
+      - hive-server
     container_name: historyserver
     volumes:
       - historyserver:/hadoop/yarn/timeline
@@ -59,6 +71,8 @@ services:
   
   zoo:
     image: zookeeper:3.4.14
+    networks:
+      - hive-server
     container_name: zoo
     environment:
       ZOO_MY_ID: 1
@@ -68,6 +82,8 @@ services:
 
   hbase-master:
     image: liaor/hbase-master:1.0.0-hbase1.2.6
+    networks:
+      - hive-server
     container_name: hbase-master
     hostname: hbase-master
     env_file:
@@ -80,6 +96,8 @@ services:
 
   hbase-region:
     image: liaor/hbase-regionserver:1.0.0-hbase1.2.6
+    networks:
+      - hive-server
     container_name: hbase-regionserver
     hostname: hbase-regionserver
     env_file:
